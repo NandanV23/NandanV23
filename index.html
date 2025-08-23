@@ -264,12 +264,19 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
         }
 
         .project:hover {
             transform: translateY(-8px);
             border-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-clickable {
+            cursor: pointer;
         }
 
         .project-image {
@@ -297,6 +304,71 @@
             line-height: 1.6;
             flex-grow: 1;
             margin-bottom: 20px;
+        }
+
+        /* GitHub Popup */
+        .github-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transform: scale(0.9);
+            background: linear-gradient(135deg, rgba(88, 28, 135, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            white-space: nowrap;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 25px rgba(88, 28, 135, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.2px;
+            pointer-events: none;
+        }
+
+        .github-popup::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .project-clickable:hover .github-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .github-icon {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 6px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .github-icon img {
+            width: 100%;
+            height: 100%;
+            filter: brightness(0) saturate(0) invert(1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
         }
 
         /* Tech Icons */
@@ -437,6 +509,11 @@
                 width: 18px;
                 height: 18px;
             }
+
+            .github-popup {
+                font-size: 11px;
+                padding: 10px 14px;
+            }
         }
 
         /* Smooth scrolling */
@@ -512,7 +589,14 @@
     <section id="projects" class="section">
         <h2>Selected Projects</h2>
         <div class="projects-grid">
-            <div class="project">
+            <!-- InspectPCB - Clickable with GitHub link -->
+            <a href="https://github.com/NandanV23/InspectPCB.git" target="_blank" class="project project-clickable">
+                <div class="github-popup">
+                    <span class="github-icon">
+                        <img src="icons/github.svg" alt="GitHub">
+                    </span>
+                    Click to view code
+                </div>
                 <img src="images/inspectpcb_image.png" alt="InspectPCB" class="project-image">
                 <div class="project-content">
                     <h3>InspectPCB</h3>
@@ -529,9 +613,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project">
+            <!-- Automated Sink Robot - Clickable with GitHub link -->
+            <a href="https://github.com/NandanV23/Automated-Sink-Robot.git" target="_blank" class="project project-clickable">
+                <div class="github-popup">
+                    <span class="github-icon">
+                        <img src="icons/github.svg" alt="GitHub">
+                    </span>
+                    Click to view code
+                </div>
                 <img src="images/sink_robot_image.jpg" alt="Automated Sink Robot" class="project-image">
                 <div class="project-content">
                     <h3>Automated Sink Robot</h3>
@@ -542,9 +633,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="project">
+            <!-- Traffic Heatmap - Clickable with GitHub link -->
+            <a href="https://github.com/NandanV23/Toronto-Traffic-Heatmap-Visualization.git" target="_blank" class="project project-clickable">
+                <div class="github-popup">
+                    <span class="github-icon">
+                        <img src="icons/github.svg" alt="GitHub">
+                    </span>
+                    Click to view code
+                </div>
                 <img src="images/heatmap_image.png" alt="Traffic Heatmap" class="project-image">
                 <div class="project-content">
                     <h3>Toronto Traffic Heatmap</h3>
@@ -558,8 +656,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
+            <!-- Audio Synthesizer - Non-clickable (no GitHub link) -->
             <div class="project">
                 <img src="images/audio_synthesizer_image.png" alt="Audio Synthesizer" class="project-image">
                 <div class="project-content">
@@ -576,6 +675,7 @@
                 </div>
             </div>
 
+            <!-- Keychain Design - Non-clickable (no GitHub link) -->
             <div class="project">
                 <img src="images/keychain_project_image.png" alt="Keychain Design" class="project-image">
                 <div class="project-content">
@@ -589,6 +689,7 @@
                 </div>
             </div>
 
+            <!-- Brake Trunnion - Non-clickable (no GitHub link) -->
             <div class="project">
                 <img src="images/brake_trunnion_image.png" alt="Brake Trunnion" class="project-image">
                 <div class="project-content">
