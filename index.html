@@ -249,6 +249,127 @@
             font-size: 16px;
             text-align: center;
         }
+        
+        /* Experience Section */
+.experience-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.experience-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.experience-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.experience-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.experience-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.experience-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+
+.experience-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.experience-info {
+    flex: 1;
+}
+
+.experience-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.experience-company {
+    font-size: 16px;
+    color: #888;
+}
+
+.experience-date {
+    font-size: 15px;
+    color: #888;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expand-icon {
+    font-size: 20px;
+    color: #888;
+    transition: transform 0.3s ease;
+}
+
+.experience-item.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+.experience-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, margin-top 0.3s ease;
+}
+
+.experience-item.expanded .experience-details {
+    max-height: 500px;
+    margin-top: 20px;
+}
+
+.experience-description {
+    color: #aaa;
+    font-size: 15px;
+    line-height: 1.7;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.experience-description ul {
+    margin-top: 12px;
+    padding-left: 20px;
+}
+
+.experience-description li {
+    margin-bottom: 8px;
+}
 
         /* Projects Section */
         .projects-grid {
@@ -537,6 +658,7 @@
             <div class="nav-links">
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
+                <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -585,6 +707,94 @@
             </div>
         </div>
     </section>
+
+    <!-- Experience Section -->
+<section id="experience" class="section">
+    <h2>Experience</h2>
+    <div class="experience-list">
+        <div class="experience-item" onclick="toggleExperience(this)">
+            <div class="experience-header">
+                <div class="experience-left">
+                    <div class="experience-logo">
+                        <img src="images/ac-logo-2.png" alt="Acceleration Consortium">
+                    </div>
+                    <div class="experience-info">
+                        <div class="experience-title">Mechatronics Engineer Intern</div>
+                        <div class="experience-company">Acceleration Consortium</div>
+                    </div>
+                </div>
+                <div class="experience-date">
+                    January 2026 - Present
+                    <span class="expand-icon">▼</span>
+                </div>
+            </div>
+            <div class="experience-details">
+                <div class="experience-description">
+                    <ul>
+                        <li>x</li>
+                        <li>x</li>
+                        <li>x</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExperience(this)">
+            <div class="experience-header">
+                <div class="experience-left">
+                    <div class="experience-logo">
+                        <img src="images/mid-sun02.png" alt="Midnight Sun">
+                    </div>
+                    <div class="experience-info">
+                        <div class="experience-title">Electrical Subteam Member</div>
+                        <div class="experience-company">Midnight Sun Solar Race Car Team</div>
+                    </div>
+                </div>
+                <div class="experience-date">
+                    September 2024 - Present
+                    <span class="expand-icon">▼</span>
+                </div>
+            </div>
+            <div class="experience-details">
+                <div class="experience-description">
+                    <ul>
+                        <li>x</li>
+                        <li>x</li>
+                        <li>x</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExperience(this)">
+            <div class="experience-header">
+                <div class="experience-left">
+                    <div class="experience-logo">
+                        <img src="images/waterloo.jpg" alt="University of Waterloo">
+                    </div>
+                    <div class="experience-info">
+                        <div class="experience-title">Embedded Systems Research Assistant</div>
+                        <div class="experience-company">University of Waterloo, Faculty of Engineering</div>
+                    </div>
+                </div>
+                <div class="experience-date">
+                    May 2024 - August 2024
+                    <span class="expand-icon">▼</span>
+                </div>
+            </div>
+            <div class="experience-details">
+                <div class="experience-description">
+                    <ul>
+                        <li>x</li>
+                        <li>x</li>
+                        <li>x</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Add more experience items following the same pattern -->
+    </div>
+</section>
 
     <!-- Projects Section -->
     <section id="projects" class="section">
@@ -678,6 +888,7 @@
 
     </section>
 
+    
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <h2>Get In Touch</h2>
@@ -689,6 +900,9 @@
 
     <script>
         // Smooth scrolling for navigation
+        function toggleExperience(element) {
+    element.classList.toggle('expanded');
+}
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
