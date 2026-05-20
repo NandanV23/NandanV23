@@ -308,6 +308,26 @@
     object-fit: cover;
 }
 
+/* Black background for specific logos */
+.experience-logo.black-bg {
+    background-color: #000000;
+    padding: 8px;
+}
+
+.experience-logo.black-bg img {
+    object-fit: contain; /* Prevents stretching */
+}
+
+/* Add to your CSS */
+.experience-logo.zoom-logo img {
+    transform: scale(1.3); /* Adjust the number: 1.5 = 150%, 2 = 200%, etc. */
+}
+
+/* If you need even more zoom */
+.experience-logo.zoom-large img {
+    transform: scale(1.8);
+}
+
 .experience-info {
     flex: 1;
 }
@@ -720,11 +740,11 @@
                     </div>
                     <div class="experience-info">
                         <div class="experience-title">Mechatronics Engineer Intern</div>
-                        <div class="experience-company">Acceleration Consortium</div>
+                        <div class="experience-company">Acceleration Consortium, University of Toronto</div>
                     </div>
                 </div>
                 <div class="experience-date">
-                    January 2026 - Present
+                    January 2026 - April 2026
                     <span class="expand-icon">▼</span>
                 </div>
             </div>
@@ -742,7 +762,7 @@
         <div class="experience-item" onclick="toggleExperience(this)">
             <div class="experience-header">
                 <div class="experience-left">
-                    <div class="experience-logo">
+                    <div class="experience-logo black-bg">
                         <img src="images/mid-sun02.png" alt="Midnight Sun">
                     </div>
                     <div class="experience-info">
@@ -774,11 +794,11 @@
                     </div>
                     <div class="experience-info">
                         <div class="experience-title">Embedded Systems Research Assistant</div>
-                        <div class="experience-company">University of Waterloo, Faculty of Engineering</div>
+                        <div class="experience-company">University of Waterloo, Department of MME</div>
                     </div>
                 </div>
                 <div class="experience-date">
-                    May 2024 - August 2024
+                    September 2025 - December 2025
                     <span class="expand-icon">▼</span>
                 </div>
             </div>
@@ -792,6 +812,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="experience-item" onclick="toggleExperience(this)">
+            <div class="experience-header">
+                <div class="experience-left">
+                    <div class="experience-logo black-bg zoom-logo">
+                        <img src="images/quasar_logo.png" alt="Quasar">
+                    </div>
+                    <div class="experience-info">
+                        <div class="experience-title">Software Engineer Intern</div>
+                        <div class="experience-company">Quasar Consulting Group</div>
+                    </div>
+                </div>
+                <div class="experience-date">
+                    May 2025 - August 2025
+                    <span class="expand-icon">▼</span>
+                </div>
+            </div>
+            <div class="experience-details">
+                <div class="experience-description">
+                    <ul>
+                        <li>x</li>
+                        <li>x</li>
+                        <li>x</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Add more experience items following the same pattern -->
     </div>
 </section>
