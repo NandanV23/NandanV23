@@ -1028,7 +1028,7 @@
             function frame() {
                 // Wave equation: next = 2*cur - prv + c²*(neighbours - 4*cur)
                 // c² = 0.5 is the max stable value for a 4-neighbour stencil
-                const c2 = 0.5;
+                const c2 = 0.2  ;
                 const next = prv; // reuse prv buffer as next — saves allocation
 
                 for (let r = 1; r < rows - 1; r++) {
