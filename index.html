@@ -54,6 +54,12 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* All sections sit above the fixed ascii canvas */
+        .section, .hero, .contact {
+            position: relative;
+            z-index: 1;
+        }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -95,6 +101,15 @@
             justify-content: center;
             text-align: center;
             padding: 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #ascii-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .hero-content {
@@ -105,6 +120,8 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-content h1 {
@@ -198,18 +215,34 @@
             align-items: center;
         }
 
+        /* About text tilt scene */
+        .about-tilt-scene {
+            perspective: 900px;
+        }
+
         .about-text {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 12px;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
         }
 
-        .about-text:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+        .about-text::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(
+                ellipse at var(--mx, 50%) var(--my, 50%),
+                rgba(255,255,255,0.06) 0%, transparent 65%
+            );
+            pointer-events: none;
         }
 
         .about-text p {
@@ -223,6 +256,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            perspective: 900px;
         }
 
         .about-image {
@@ -233,6 +267,9 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.02);
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: border-color 0.3s ease;
         }
 
         .about-image-placeholder {
@@ -251,145 +288,157 @@
         }
         
         /* Experience Section */
-.experience-list {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+        .experience-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-.experience-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px 28px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+        /* Experience tilt scene wrapper */
+        .experience-tilt-scene {
+            perspective: 900px;
+        }
 
-.experience-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
+        .experience-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 28px;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
 
-.experience-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
+        /* Glare layer for experience items */
+        .experience-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(
+                ellipse at var(--mx, 50%) var(--my, 50%),
+                rgba(255,255,255,0.05) 0%, transparent 65%
+            );
+            pointer-events: none;
+        }
 
-.experience-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex: 1;
-}
+        .experience-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
 
-.experience-logo {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-}
+        .experience-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
 
+        .experience-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
 
-.experience-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .experience-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-/* Black background for specific logos */
-.experience-logo.black-bg {
-    background-color: #000000;
-    padding: 8px;
-}
+        .experience-logo.black-bg {
+            background-color: #000000;
+            padding: 8px;
+        }
 
-.experience-logo.black-bg img {
-    object-fit: contain; /* Prevents stretching */
-}
+        .experience-logo.black-bg img {
+            object-fit: contain;
+        }
 
-/* Add to your CSS */
-.experience-logo.zoom-logo img {
-    transform: scale(1.3); /* Adjust the number: 1.5 = 150%, 2 = 200%, etc. */
-}
+        .experience-logo.zoom-logo img {
+            transform: scale(1.3);
+        }
 
-/* If you need even more zoom */
-.experience-logo.zoom-large img {
-    transform: scale(1.8);
-}
+        .experience-logo.zoom-large img {
+            transform: scale(1.8);
+        }
 
-.experience-info {
-    flex: 1;
-}
+        .experience-info {
+            flex: 1;
+        }
 
-.experience-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 4px;
-}
+        .experience-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
 
-.experience-company {
-    font-size: 16px;
-    color: #888;
-}
+        .experience-company {
+            font-size: 16px;
+            color: #888;
+        }
 
-.experience-date {
-    font-size: 15px;
-    color: #888;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .experience-date {
+            font-size: 15px;
+            color: #888;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.expand-icon {
-    font-size: 20px;
-    color: #888;
-    transition: transform 0.3s ease;
-}
+        .expand-icon {
+            font-size: 20px;
+            color: #888;
+            transition: transform 0.3s ease;
+        }
 
-.experience-item.expanded .expand-icon {
-    transform: rotate(180deg);
-}
+        .experience-item.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
 
-.experience-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, margin-top 0.3s ease;
-}
+        .experience-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+        }
 
-.experience-item.expanded .experience-details {
-    max-height: 500px;
-    margin-top: 20px;
-}
+        .experience-item.expanded .experience-details {
+            max-height: 500px;
+            margin-top: 20px;
+        }
 
-.experience-description {
-    color: #aaa;
-    font-size: 15px;
-    line-height: 1.7;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .experience-description {
+            color: #aaa;
+            font-size: 15px;
+            line-height: 1.7;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.experience-description ul {
-    margin-top: 12px;
-    padding-left: 20px;
-}
+        .experience-description ul {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
 
-.experience-description li {
-    margin-bottom: 8px;
-}
+        .experience-description li {
+            margin-bottom: 8px;
+        }
 
         /* Projects Section */
         .projects-grid {
@@ -398,23 +447,38 @@
             gap: 40px;
         }
 
+        /* Project tilt scene wrapper */
+        .project-tilt-scene {
+            perspective: 900px;
+        }
+
         .project {
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.02);
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.1s ease-out;
             display: flex;
             flex-direction: column;
             position: relative;
             text-decoration: none;
             color: inherit;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
 
-        .project:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        /* Glare layer for project cards */
+        .project::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(
+                ellipse at var(--mx, 50%) var(--my, 50%),
+                rgba(255,255,255,0.07) 0%, transparent 65%
+            );
+            pointer-events: none;
+            z-index: 1;
         }
 
         .project-clickable {
@@ -503,14 +567,8 @@
         }
 
         @keyframes pulse {
-            0%, 100% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.8;
-                transform: scale(1.05);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         /* Tech Icons */
@@ -545,7 +603,6 @@
             transform: translateY(-2px);
         }
 
-        /* Icon image styling */
         .icon-img {
             width: 20px;
             height: 20px;
@@ -603,70 +660,22 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-container {
-                padding: 0 20px;
-            }
-
-            .nav-links {
-                gap: 20px;
-            }
-
-            .hero {
-                padding: 0 20px;
-            }
-
-            .section {
-                padding: 60px 20px;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .about-image,
-            .about-image-placeholder {
-                max-width: 100%;
-                height: 500px;
-            }
-
-            .contact {
-                padding: 60px 20px;
-            }
-
-            .tech-icons {
-                gap: 8px;
-            }
-
-            .icon-img {
-                width: 18px;
-                height: 18px;
-            }
-
-            .github-popup {
-                font-size: 11px;
-                padding: 10px 14px;
-            }
+            .nav-container { padding: 0 20px; }
+            .nav-links { gap: 20px; }
+            .hero { padding: 0 20px; }
+            .section { padding: 60px 20px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .contact-links { flex-direction: column; gap: 20px; }
+            .about-image, .about-image-placeholder { max-width: 100%; height: 500px; }
+            .contact { padding: 60px 20px; }
+            .tech-icons { gap: 8px; }
+            .icon-img { width: 18px; height: 18px; }
+            .github-popup { font-size: 11px; padding: 10px 14px; }
         }
 
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Hide scrollbar */
-        ::-webkit-scrollbar {
-            display: none;
-        }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 
@@ -687,6 +696,7 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <canvas id="ascii-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
             <h1>Nandan Varma</h1>
             <p>Mechatronics Engineering Student at the University of Waterloo</p>
@@ -712,257 +722,242 @@
     <section id="about" class="section">
         <h2>About</h2>
         <div class="about-grid">
-            <div class="about-text">
-                <p>Hello! I'm Nandan, currently in 2A Mechatronics Engineering at the University of Waterloo. 
-                    I gained valuable industry experience during my first co-op, serving dual roles as an 
-                    Automation Engineer with Quasar Consulting Group and Mechanical Engineering Intern with 
-                    their subsidiary, Pratus Group.</p>
-                <p>I'm passionate about embedded systems and robotics, with a focus on firmware development and automation technologies. Currently, I work as both a Firmware and Hardware Engineer on Waterloo's Midnight Sun Solar Race Car Team. My goal is to contribute to the automotive industry through robotics automation and computer vision systems, working on projects that integrate hardware and software solutions for autonomous driving and intelligent manufacturing.</p>
-                <p>I am currently seeking opportunities to apply my skills in innovative engineering environments
-                     and contribute to cutting-edge technology development.</p>
+            <div class="about-tilt-scene">
+                <div class="about-text" data-tilt data-tilt-strength="8">
+                    <p>Hello! I'm Nandan, currently in 2A Mechatronics Engineering at the University of Waterloo. 
+                        I gained valuable industry experience during my first co-op, serving dual roles as an 
+                        Automation Engineer with Quasar Consulting Group and Mechanical Engineering Intern with 
+                        their subsidiary, Pratus Group.</p>
+                    <p>I'm passionate about embedded systems and robotics, with a focus on firmware development and automation technologies. Currently, I work as both a Firmware and Hardware Engineer on Waterloo's Midnight Sun Solar Race Car Team. My goal is to contribute to the automotive industry through robotics automation and computer vision systems, working on projects that integrate hardware and software solutions for autonomous driving and intelligent manufacturing.</p>
+                    <p>I am currently seeking opportunities to apply my skills in innovative engineering environments
+                         and contribute to cutting-edge technology development.</p>
+                </div>
             </div>
             <div class="about-image-container">
-                <!-- Replace the src with your actual image path -->
-                <img src="images/about_me_image.jpeg" alt="Nandan Varma" class="about-image">
+                <img src="images/about_me_image.jpeg" alt="Nandan Varma" class="about-image" data-tilt data-tilt-strength="6">
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-<section id="experience" class="section">
-    <h2>Experience</h2>
-    <div class="experience-list">
-        <div class="experience-item" onclick="toggleExperience(this)">
-            <div class="experience-header">
-                <div class="experience-left">
-                    <div class="experience-logo">
-                        <img src="images/ac-logo-2.png" alt="Acceleration Consortium">
-                    </div>
-                    <div class="experience-info">
-                        <div class="experience-title">Mechatronics Engineer Intern</div>
-                        <div class="experience-company">Acceleration Consortium, University of Toronto</div>
-                    </div>
-                </div>
-                <div class="experience-date">
-                    January 2026 - April 2026
-                    <span class="expand-icon">▼</span>
-                </div>
-            </div>
-            <div class="experience-details">
-                <div class="experience-description">
-                    <ul>
-                        <li>Developed embedded firmware in C on an STM32 microcontroller for a precision automated gantry system</li>
-                        <li>Designed a multi-axis motor driver PCB end-to-end in Altium Designer, from schematic to board bring-up</li>
-                        <li>Implemented a PLC-style PID temperature control system with real-time data monitoring and multi-zone heater management</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+        <div class="experience-list">
 
-        <div class="experience-item" onclick="toggleExperience(this)">
-            <div class="experience-header">
-                <div class="experience-left">
-                    <div class="experience-logo black-bg">
-                        <img src="images/mid-sun02.png" alt="Midnight Sun">
+            <div class="experience-tilt-scene">
+                <div class="experience-item" data-tilt data-tilt-strength="5" onclick="toggleExperience(this)">
+                    <div class="experience-header">
+                        <div class="experience-left">
+                            <div class="experience-logo">
+                                <img src="images/ac-logo-2.png" alt="Acceleration Consortium">
+                            </div>
+                            <div class="experience-info">
+                                <div class="experience-title">Mechatronics Engineer Intern</div>
+                                <div class="experience-company">Acceleration Consortium, University of Toronto</div>
+                            </div>
+                        </div>
+                        <div class="experience-date">
+                            January 2026 - April 2026
+                            <span class="expand-icon">▼</span>
+                        </div>
                     </div>
-                    <div class="experience-info">
-                        <div class="experience-title">Electrical Subteam Member</div>
-                        <div class="experience-company">Midnight Sun Solar Race Car Team</div>
+                    <div class="experience-details">
+                        <div class="experience-description">
+                            <ul>
+                                <li>Developed embedded firmware in C on an STM32 microcontroller for a precision automated gantry system</li>
+                                <li>Designed a multi-axis motor driver PCB end-to-end in Altium Designer, from schematic to board bring-up</li>
+                                <li>Implemented a PLC-style PID temperature control system with real-time data monitoring and multi-zone heater management</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-date">
-                    September 2024 - Present
-                    <span class="expand-icon">▼</span>
                 </div>
             </div>
-            <div class="experience-details">
-                <div class="experience-description">
-                    <ul>
-                        <li>Designed an analog window comparator PCB to detect battery undervoltage and overvoltage conditions</li>
-                        <li>Contributed across hardware and firmware on a real competitive solar vehicle</li>
-                        <li>Designed a PCB for an Insulation Monitoring Device (IMD) to detect HV/LV isolation faults</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <div class="experience-item" onclick="toggleExperience(this)">
-            <div class="experience-header">
-                <div class="experience-left">
-                    <div class="experience-logo">
-                        <img src="images/waterloo.jpg" alt="University of Waterloo">
+            <div class="experience-tilt-scene">
+                <div class="experience-item" data-tilt data-tilt-strength="5" onclick="toggleExperience(this)">
+                    <div class="experience-header">
+                        <div class="experience-left">
+                            <div class="experience-logo black-bg">
+                                <img src="images/mid-sun02.png" alt="Midnight Sun">
+                            </div>
+                            <div class="experience-info">
+                                <div class="experience-title">Electrical Subteam Member</div>
+                                <div class="experience-company">Midnight Sun Solar Race Car Team</div>
+                            </div>
+                        </div>
+                        <div class="experience-date">
+                            September 2024 - Present
+                            <span class="expand-icon">▼</span>
+                        </div>
                     </div>
-                    <div class="experience-info">
-                        <div class="experience-title">Embedded Systems Research Assistant</div>
-                        <div class="experience-company">University of Waterloo, Department of MME</div>
+                    <div class="experience-details">
+                        <div class="experience-description">
+                            <ul>
+                                <li>Designed an analog window comparator PCB to detect battery undervoltage and overvoltage conditions</li>
+                                <li>Contributed across hardware and firmware on a real competitive solar vehicle</li>
+                                <li>Designed a PCB for an Insulation Monitoring Device (IMD) to detect HV/LV isolation faults</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-date">
-                    September 2025 - December 2025
-                    <span class="expand-icon">▼</span>
                 </div>
             </div>
-            <div class="experience-details">
-                <div class="experience-description">
-                    <ul>
-                        <li>x</li>
-                        <li>x</li>
-                        <li>x</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <div class="experience-item" onclick="toggleExperience(this)">
-            <div class="experience-header">
-                <div class="experience-left">
-                    <div class="experience-logo black-bg zoom-logo">
-                        <img src="images/quasar_logo.png" alt="Quasar">
+            <div class="experience-tilt-scene">
+                <div class="experience-item" data-tilt data-tilt-strength="5" onclick="toggleExperience(this)">
+                    <div class="experience-header">
+                        <div class="experience-left">
+                            <div class="experience-logo">
+                                <img src="images/waterloo.jpg" alt="University of Waterloo">
+                            </div>
+                            <div class="experience-info">
+                                <div class="experience-title">Embedded Systems Research Assistant</div>
+                                <div class="experience-company">University of Waterloo, Department of MME</div>
+                            </div>
+                        </div>
+                        <div class="experience-date">
+                            September 2025 - December 2025
+                            <span class="expand-icon">▼</span>
+                        </div>
                     </div>
-                    <div class="experience-info">
-                        <div class="experience-title">Software Engineer Intern</div>
-                        <div class="experience-company">Quasar Consulting Group</div>
+                    <div class="experience-details">
+                        <div class="experience-description">
+                            <ul>
+                                <li>x</li>
+                                <li>x</li>
+                                <li>x</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-date">
-                    May 2025 - August 2025
-                    <span class="expand-icon">▼</span>
                 </div>
             </div>
-            <div class="experience-details">
-                <div class="experience-description">
-                    <ul>
-                        <li>x</li>
-                        <li>x</li>
-                        <li>x</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <!-- Add more experience items following the same pattern -->
-    </div>
-</section>
+            <div class="experience-tilt-scene">
+                <div class="experience-item" data-tilt data-tilt-strength="5" onclick="toggleExperience(this)">
+                    <div class="experience-header">
+                        <div class="experience-left">
+                            <div class="experience-logo black-bg zoom-logo">
+                                <img src="images/quasar_logo.png" alt="Quasar">
+                            </div>
+                            <div class="experience-info">
+                                <div class="experience-title">Software Engineer Intern</div>
+                                <div class="experience-company">Quasar Consulting Group</div>
+                            </div>
+                        </div>
+                        <div class="experience-date">
+                            May 2025 - August 2025
+                            <span class="expand-icon">▼</span>
+                        </div>
+                    </div>
+                    <div class="experience-details">
+                        <div class="experience-description">
+                            <ul>
+                                <li>x</li>
+                                <li>x</li>
+                                <li>x</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <!-- Projects Section -->
     <section id="projects" class="section">
         <h2>Selected Projects</h2>
         <div class="projects-grid">
-            <!-- InspectPCB - Clickable with GitHub link -->
-            <a href="https://github.com/NandanV23/InspectPCB.git" target="_blank" class="project project-clickable">
-                <div class="github-popup">
-                    <span class="github-icon">
-                        <img src="icons/github.svg" alt="GitHub">
-                    </span>
-                    Click to view code
-                </div>
-                <img src="images/inspectpcb_image.png" alt="InspectPCB" class="project-image">
-                <div class="project-content">
-                    <h3>InspectPCB</h3>
-                    <p>Web-based PCB defect detection system using YOLOv5 (PyTorch) neural networks and OpenCV, deployed with Streamlit for real-time manufacturing defect identification.</p>
-                    <div class="tech-icons">
-                        <div class="tech-icon python" title="Python">
-                            <img src="icons/python.svg" alt="Python" class="icon-img">
-                        </div>
-                        <div class="tech-icon opencv" title="OpenCV">
-                            <img src="icons/opencv.svg" alt="OpenCV" class="icon-img">
-                        </div>
-                        <div class="tech-icon pytorch" title="PyTorch">
-                            <img src="icons/pytorch.svg" alt="PyTorch" class="icon-img">
+
+            <div class="project-tilt-scene">
+                <a href="https://github.com/NandanV23/InspectPCB.git" target="_blank" class="project project-clickable" data-tilt data-tilt-strength="12">
+                    <div class="github-popup">
+                        <span class="github-icon"><img src="icons/github.svg" alt="GitHub"></span>
+                        Click to view code
+                    </div>
+                    <img src="images/inspectpcb_image.png" alt="InspectPCB" class="project-image">
+                    <div class="project-content">
+                        <h3>InspectPCB</h3>
+                        <p>Web-based PCB defect detection system using YOLOv5 (PyTorch) neural networks and OpenCV, deployed with Streamlit for real-time manufacturing defect identification.</p>
+                        <div class="tech-icons">
+                            <div class="tech-icon python" title="Python"><img src="icons/python.svg" alt="Python" class="icon-img"></div>
+                            <div class="tech-icon opencv" title="OpenCV"><img src="icons/opencv.svg" alt="OpenCV" class="icon-img"></div>
+                            <div class="tech-icon pytorch" title="PyTorch"><img src="icons/pytorch.svg" alt="PyTorch" class="icon-img"></div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <!-- Dubins UAV Path Planner -->
-            <a href="https://github.com/NandanV23/dubins-uav-planner" target="_blank" class="project project-clickable">
-                <div class="github-popup">
-                    <span class="github-icon">
-                        <img src="icons/github.svg" alt="GitHub">
-                    </span>
-                    Click to view code
-                </div>
-                <img src="images/dubins_uav_planner.png" alt="Dubins UAV Path Planner" class="project-image">
-                <div class="project-content">
-                    <h3>Dubins UAV Path Planner</h3>
-                    <p>A complete implementation of Dubins path planning and L1 guidance for fixed-wing UAV simulation, with a full ROS2 node architecture and RViz2 visualization.</p>
-                    <div class="tech-icons">
-                        <div class="tech-icon python" title="Python">
-                            <img src="icons/python.svg" alt="Python" class="icon-img">
-                        </div>
-                        <div class="tech-icon ros" title="ROS2">
-                            <img src="icons/ros.svg" alt="ROS2" class="icon-img">
-                        </div>
-                        <div class="tech-icon numpy" title="NumPy">
-                            <img src="icons/numpy.svg" alt="NumPy" class="icon-img">
+            <div class="project-tilt-scene">
+                <a href="https://github.com/NandanV23/dubins-uav-planner" target="_blank" class="project project-clickable" data-tilt data-tilt-strength="12">
+                    <div class="github-popup">
+                        <span class="github-icon"><img src="icons/github.svg" alt="GitHub"></span>
+                        Click to view code
+                    </div>
+                    <img src="images/dubins_uav_planner.png" alt="Dubins UAV Path Planner" class="project-image">
+                    <div class="project-content">
+                        <h3>Dubins UAV Path Planner</h3>
+                        <p>A complete implementation of Dubins path planning and L1 guidance for fixed-wing UAV simulation, with a full ROS2 node architecture and RViz2 visualization.</p>
+                        <div class="tech-icons">
+                            <div class="tech-icon python" title="Python"><img src="icons/python.svg" alt="Python" class="icon-img"></div>
+                            <div class="tech-icon ros" title="ROS2"><img src="icons/ros.svg" alt="ROS2" class="icon-img"></div>
+                            <div class="tech-icon numpy" title="NumPy"><img src="icons/numpy.svg" alt="NumPy" class="icon-img"></div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <!-- Automated Sink Robot - Clickable with GitHub link -->
-            <a href="https://github.com/NandanV23/Automated-Sink-Robot.git" target="_blank" class="project project-clickable">
-                <div class="github-popup">
-                    <span class="github-icon">
-                        <img src="icons/github.svg" alt="GitHub">
-                    </span>
-                    Click to view code
-                </div>
-                <img src="images/sink_robot_image.jpg" alt="Automated Sink Robot" class="project-image">
-                <div class="project-content">
-                    <h3>Automated Sink Robot</h3>
-                    <p>Robotic sink system with proximity detection, temperature control, and automated soap dispensing using EV3 sensors and servo motors.</p>
-                    <div class="tech-icons">
-                        <div class="tech-icon lego" title="C">
-                            <img src="icons/c.svg" alt="C" class="icon-img">
+            <div class="project-tilt-scene">
+                <a href="https://github.com/NandanV23/Automated-Sink-Robot.git" target="_blank" class="project project-clickable" data-tilt data-tilt-strength="12">
+                    <div class="github-popup">
+                        <span class="github-icon"><img src="icons/github.svg" alt="GitHub"></span>
+                        Click to view code
+                    </div>
+                    <img src="images/sink_robot_image.jpg" alt="Automated Sink Robot" class="project-image">
+                    <div class="project-content">
+                        <h3>Automated Sink Robot</h3>
+                        <p>Robotic sink system with proximity detection, temperature control, and automated soap dispensing using EV3 sensors and servo motors.</p>
+                        <div class="tech-icons">
+                            <div class="tech-icon lego" title="C"><img src="icons/c.svg" alt="C" class="icon-img"></div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <!-- Traffic Heatmap - Clickable with GitHub link -->
-            <a href="https://github.com/NandanV23/Toronto-Traffic-Heatmap-Visualization.git" target="_blank" class="project project-clickable">
-                <div class="github-popup">
-                    <span class="github-icon">
-                        <img src="icons/github.svg" alt="GitHub">
-                    </span>
-                    Click to view code
-                </div>
-                <img src="images/heatmap_image.png" alt="Traffic Heatmap" class="project-image">
-                <div class="project-content">
-                    <h3>Toronto Traffic Heatmap</h3>
-                    <p>Interactive traffic visualization using HTML, CSS, and Leaflet.js to display real-time congestion patterns with geospatial data analysis.</p>
-                    <div class="tech-icons">
-                        <div class="tech-icon html" title="HTML">
-                            <img src="icons/html5.svg" alt="HTML" class="icon-img">
-                        </div>
-                        <div class="tech-icon leaflet" title="CSS">
-                            <img src="icons/css.svg" alt="CSS" class="icon-img">
+            <div class="project-tilt-scene">
+                <a href="https://github.com/NandanV23/Toronto-Traffic-Heatmap-Visualization.git" target="_blank" class="project project-clickable" data-tilt data-tilt-strength="12">
+                    <div class="github-popup">
+                        <span class="github-icon"><img src="icons/github.svg" alt="GitHub"></span>
+                        Click to view code
+                    </div>
+                    <img src="images/heatmap_image.png" alt="Traffic Heatmap" class="project-image">
+                    <div class="project-content">
+                        <h3>Toronto Traffic Heatmap</h3>
+                        <p>Interactive traffic visualization using HTML, CSS, and Leaflet.js to display real-time congestion patterns with geospatial data analysis.</p>
+                        <div class="tech-icons">
+                            <div class="tech-icon html" title="HTML"><img src="icons/html5.svg" alt="HTML" class="icon-img"></div>
+                            <div class="tech-icon leaflet" title="CSS"><img src="icons/css.svg" alt="CSS" class="icon-img"></div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <!-- Audio Synthesizer - Non-clickable (no GitHub link) -->
-            <div class="project">
-                <img src="images/audio_synthesizer_image.png" alt="Audio Synthesizer" class="project-image">
-                <div class="project-content">
-                    <h3>Audio Synthesizer</h3>
-                    <p>Custom audio synthesizer designed in AutoCAD and programmed with Arduino for optimized sound performance and song playback.</p>
-                    <div class="tech-icons">
-                        <div class="tech-icon autocad" title="AutoCAD">
-                            <img src="icons/autocad.svg" alt="AutoCAD" class="icon-img">
-                        </div>
-                        <div class="tech-icon arduino" title="Arduino">
-                            <img src="icons/arduino.svg" alt="Arduino" class="icon-img">
+            <div class="project-tilt-scene">
+                <div class="project" data-tilt data-tilt-strength="12">
+                    <img src="images/audio_synthesizer_image.png" alt="Audio Synthesizer" class="project-image">
+                    <div class="project-content">
+                        <h3>Audio Synthesizer</h3>
+                        <p>Custom audio synthesizer designed in AutoCAD and programmed with Arduino for optimized sound performance and song playback.</p>
+                        <div class="tech-icons">
+                            <div class="tech-icon autocad" title="AutoCAD"><img src="icons/autocad.svg" alt="AutoCAD" class="icon-img"></div>
+                            <div class="tech-icon arduino" title="Arduino"><img src="icons/arduino.svg" alt="Arduino" class="icon-img"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
+        </div>
     </section>
 
-    
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <h2>Get In Touch</h2>
@@ -973,51 +968,227 @@
     </section>
 
     <script>
-        // Smooth scrolling for navigation
+        // ─── ASCII Water Ripple — wave propagation sim ──────────────────────────
+        (function() {
+            const cvs = document.getElementById('ascii-canvas');
+            const ctx = cvs.getContext('2d');
+
+            const CHARS     = ['.', '-', ':', '=', '@'];
+            const CHAR_W    = 16;
+            const CHAR_H    = 20;
+            const FONT_SIZE = 13;
+            const DAMPING    = 0.97;   // how long waves persist — closer to 1 = longer
+            const DOT_ALPHA  = 0.028;  // static background dot brightness
+            const WAVE_SCALE = 0.18;   // how bright a full-amplitude wave cell is
+
+            let cols, rows;
+            // Two buffers — current and previous displacement, classic wave PDE
+            let cur, prv;
+            let staticDot;
+
+            function resize() {
+                cvs.width  = window.innerWidth;
+                cvs.height = window.innerHeight;
+                cols = Math.ceil(cvs.width  / CHAR_W) + 2;
+                rows = Math.ceil(cvs.height / CHAR_H) + 2;
+                const n = cols * rows;
+                cur = new Float32Array(n);
+                prv = new Float32Array(n);
+                staticDot = new Uint8Array(n);
+                for (let r = 0; r < rows; r++)
+                    for (let c = 0; c < cols; c++) {
+                        const s = (r * 7919 + c * 6271) & 0xffff;
+                        staticDot[r * cols + c] = (s % 9 === 0) ? 1 : 0;
+                    }
+                ctx.font = `${FONT_SIZE}px 'Courier New', monospace`;
+                ctx.textBaseline = 'top';
+            }
+
+            // Inject energy at a pixel coordinate
+            function disturb(px, py, strength) {
+                const c = Math.round(px / CHAR_W);
+                const r = Math.round(py / CHAR_H);
+                // Splat a small 3×3 kernel so it feels like a drop hitting water
+                for (let dr = -1; dr <= 1; dr++)
+                    for (let dc = -1; dc <= 1; dc++) {
+                        const rr = r + dr, cc = c + dc;
+                        if (rr < 0 || rr >= rows || cc < 0 || cc >= cols) continue;
+                        const falloff = (dr === 0 && dc === 0) ? 1.0 : 0.5;
+                        cur[rr * cols + cc] += strength * falloff;
+                    }
+            }
+
+            // Selectors that should block disturbance — cards, nav, contact
+            const BLOCK_SELECTOR = '.project, .experience-item, .about-text, .about-image, nav, .contact-links, .cta-buttons, .hero-skills';
+
+            function isOverCard(e) {
+                return !!e.target.closest(BLOCK_SELECTOR);
+            }
+
+            // Mouse: inject a small continuous disturbance while moving
+            let lastMx = -1, lastMy = -1;
+            window.addEventListener('mousemove', e => {
+                if (isOverCard(e)) return;
+                // Only disturb if cursor actually moved to a new cell
+                const nc = Math.round(e.clientX / CHAR_W);
+                const nr = Math.round(e.clientY / CHAR_H);
+                if (nc !== lastMx || nr !== lastMy) {
+                    disturb(e.clientX, e.clientY, 1.8);
+                    lastMx = nc; lastMy = nr;
+                }
+            });
+
+            // Click: big splash (only outside cards)
+            window.addEventListener('click', e => {
+                if (isOverCard(e)) return;
+                disturb(e.clientX, e.clientY, 5.0);
+            });
+
+            window.addEventListener('resize', resize);
+
+            function frame() {
+                // Wave equation: next = 2*cur - prv + c²*(neighbours - 4*cur)
+                // c² = 0.5 is the max stable value for a 4-neighbour stencil
+                const c2 = 0.5;
+                const next = prv; // reuse prv buffer as next — saves allocation
+
+                for (let r = 1; r < rows - 1; r++) {
+                    for (let c = 1; c < cols - 1; c++) {
+                        const i = r * cols + c;
+                        const laplacian =
+                            cur[i - 1] + cur[i + 1] +
+                            cur[i - cols] + cur[i + cols] -
+                            4 * cur[i];
+                        next[i] = (2 * cur[i] - prv[i] + c2 * laplacian) * DAMPING;
+                    }
+                }
+
+                // Swap buffers
+                prv = cur;
+                cur = next;
+
+                // Draw
+                ctx.clearRect(0, 0, cvs.width, cvs.height);
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const idx = r * cols + c;
+                        const v   = cur[idx];  // signed displacement
+                        const abs = v < 0 ? -v : v;
+
+                        if (abs > 0.04) {
+                            // Map displacement to char — peaks get denser chars
+                            const t  = Math.min(1, abs / 2.5);
+                            const ci = Math.floor(t * (CHARS.length - 1));
+                            const alpha = DOT_ALPHA + t * WAVE_SCALE;
+                            ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+                            ctx.fillText(CHARS[ci], c * CHAR_W, r * CHAR_H);
+                        } else if (staticDot[idx]) {
+                            ctx.fillStyle = `rgba(255,255,255,${DOT_ALPHA})`;
+                            ctx.fillText('.', c * CHAR_W, r * CHAR_H);
+                        }
+                    }
+                }
+
+                requestAnimationFrame(frame);
+            }
+
+            resize();
+            frame();
+        })();
+
+        // ─── Toggle experience expand ───────────────────────────────────────────
         function toggleExperience(element) {
-    element.classList.toggle('expanded');
-}
+            element.classList.toggle('expanded');
+        }
+
+        // ─── 3D Tilt Effect ─────────────────────────────────────────────────────
+        function initTilt(el) {
+            const strength = parseFloat(el.dataset.tiltStrength) || 12;
+            // The parent provides the perspective; the element itself rotates
+            const parent = el.parentElement;
+            parent.style.perspective = '900px';
+
+            let rafId = null;
+            let targetRX = 0, targetRY = 0;
+            let currentRX = 0, currentRY = 0;
+            let isHovering = false;
+
+            function lerp(a, b, t) { return a + (b - a) * t; }
+
+            function animate() {
+                currentRX = lerp(currentRX, targetRX, 0.12);
+                currentRY = lerp(currentRY, targetRY, 0.12);
+
+                el.style.transform = `rotateX(${currentRX}deg) rotateY(${currentRY}deg)`;
+                el.style.boxShadow = `${-currentRY * 2}px ${currentRX * 2}px 40px rgba(0,0,0,0.45)`;
+
+                const stillMoving = Math.abs(currentRX - targetRX) > 0.01 || Math.abs(currentRY - targetRY) > 0.01;
+                if (isHovering || stillMoving) {
+                    rafId = requestAnimationFrame(animate);
+                } else {
+                    rafId = null;
+                    el.style.transform = '';
+                    el.style.boxShadow = '';
+                }
+            }
+
+            el.addEventListener('mouseenter', () => {
+                isHovering = true;
+                if (!rafId) rafId = requestAnimationFrame(animate);
+            });
+
+            el.addEventListener('mousemove', e => {
+                const r = el.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width;
+                const y = (e.clientY - r.top) / r.height;
+                targetRY = (x - 0.5) * strength;
+                targetRX = (0.5 - y) * strength;
+                el.style.setProperty('--mx', `${x * 100}%`);
+                el.style.setProperty('--my', `${y * 100}%`);
+            });
+
+            el.addEventListener('mouseleave', () => {
+                isHovering = false;
+                targetRX = 0;
+                targetRY = 0;
+                el.style.setProperty('--mx', '50%');
+                el.style.setProperty('--my', '50%');
+                if (!rafId) rafId = requestAnimationFrame(animate);
+            });
+        }
+
+        // Initialise all tilt elements
+        document.querySelectorAll('[data-tilt]').forEach(initTilt);
+
+        // ─── Smooth scroll for nav links ────────────────────────────────────────
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Active nav state - Updated to work with all sections
+        // ─── Active nav highlight on scroll ─────────────────────────────────────
         window.addEventListener('scroll', function() {
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-links a');
-            
             let current = '';
-            const scrollPos = window.scrollY + 150; // Offset for better triggering
-            
+            const scrollPos = window.scrollY + 150;
+
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute('id');
-                
-                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                    current = sectionId;
+                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                    current = section.getAttribute('id');
                 }
             });
 
-            // If we're at the bottom of the page, highlight contact
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
                 current = 'contact';
             }
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').slice(1) === current) {
-                    link.classList.add('active');
-                }
+                if (link.getAttribute('href').slice(1) === current) link.classList.add('active');
             });
         });
     </script>
